@@ -1,13 +1,13 @@
 name: treeuse
 description: "Treeuse package to have incredible reusable components"
-version: 0.0.1
+version: 0.0.4
 homepage: https://github.com/tarunchauhan97/treeuse
 repository: https://github.com/tarunchauhan97/treeuse
 issue_tracker: https://github.com/tarunchauhan97/treeuse/issues
 documentation: https://pub.dev/packages/treeuse
 
 environment:
-  sdk: ^3.5.1
+  sdk: ^3.0.0
   flutter: ">=1.17.0"
 
 dependencies:

@@ -18,7 +18,9 @@ extension StringExtensions on String {
   double? toDouble() => double.tryParse(this);
 
   /// Checks if the string is null or empty.
-  bool get isNullOrEmpty => this.trim().isEmpty;
+  bool get isNullOrEmpty => trim().isEmpty;
+
+  String get strRev => split('').reversed.join();
 }
 
 extension NullCheckExtension<T> on T? {
@@ -36,7 +38,7 @@ extension ResponsiveExtensions on BuildContext {
   /// Checks if the device is a tablet
   bool get isTablet =>
       MediaQuery.of(this).size.shortestSide >= 600 &&
-          MediaQuery.of(this).size.shortestSide < 900;
+      MediaQuery.of(this).size.shortestSide < 900;
 
   /// Checks if the device is a web platform
   bool get isWeb => kIsWeb;
