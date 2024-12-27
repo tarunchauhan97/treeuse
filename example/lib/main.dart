@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:treeuse/treeuse.dart';
+import 'package:treeuse/helpers/treeuse_helper.dart';
+import 'package:treeuse/widgets/treeuse_responsive.dart';
 
 // Usage Example:
 void main() {
   runApp(
     TreeuseResponsive(
       manageOrientation: true,
-      child: MyApp(),
+      child: MyTreeuseApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyTreeuseApp extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
