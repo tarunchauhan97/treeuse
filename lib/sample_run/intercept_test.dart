@@ -8,7 +8,7 @@ void main() async {
         logRequest: true,
         logRequestHeader: true,
         logRequestBody: true,
-        logResponseHeader: true,
+        logResponseHeader: false,
         logResponseBody: true,
         logError: true,
         compact: true,
