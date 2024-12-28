@@ -5,10 +5,7 @@ import 'package:treeuse/widgets/treeuse_responsive.dart';
 // Usage Example:
 void main() {
   runApp(
-    TreeuseResponsive(
-      manageOrientation: true,
-      child: MyTreeuseApp(),
-    ),
+    MyTreeuseApp(),
   );
 }
 
@@ -22,23 +19,25 @@ class MyTreeuseApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Treeuse Responsive Builder Example'),
         ),
-        body: Center(
-          child: Builder(
-            builder: (context) {
-              if (TreeuseRespHelper.isTMobile) {
-                return Text(TreeuseRespHelper.isTPortrait
-                    ? 'Mobile - Portrait'
-                    : 'Mobile - Landscape');
-              } else if (TreeuseRespHelper.isTTablet) {
-                return const Text('This is a Tablet');
-              } else if (TreeuseRespHelper.isTWeb) {
-                return const Text('This is a Web device');
-              } else if (TreeuseRespHelper.isTDesktop) {
-                return const Text('This is a Desktop device');
-              } else {
-                return const Text('Unknown device type');
-              }
-            },
+        body: TreeuseResponsive(
+          child: Center(
+            child: Builder(
+              builder: (context) {
+                if (TreeuseRespHelper.isTMobile) {
+                  return Text(TreeuseRespHelper.isTPortrait
+                      ? 'Mobile - Portrait'
+                      : 'Mobile - Landscape');
+                } else if (TreeuseRespHelper.isTTablet) {
+                  return const Text('This is a Tablet');
+                } else if (TreeuseRespHelper.isTWeb) {
+                  return const Text('This is a Web device');
+                } else if (TreeuseRespHelper.isTDesktop) {
+                  return const Text('This is a Desktop device');
+                } else {
+                  return const Text('Unknown device type');
+                }
+              },
+            ),
           ),
         ),
       ),
