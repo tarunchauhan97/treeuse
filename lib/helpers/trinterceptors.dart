@@ -81,6 +81,7 @@ class Trinterceptors extends Interceptor {
   }
 
   void _logCurlCommand(RequestOptions options) {
+      final colorOfCurl = _getColorForMethod(options.method);
     final buffer = StringBuffer();
     buffer.write('curl -X ${options.method} ');
 
@@ -110,19 +111,45 @@ class Trinterceptors extends Interceptor {
     // Add URL
     buffer.write('"${options.uri}"');
 
-    logPrint('══ cURL Command');
+    logPrint('$colorOfCurl══ cURL Command');
     logPrint(buffer.toString());
-    _logDivider('══');
+    _logDivider('══$_colorReset');
+  }
+  static const _colorReset = '\x1B[0m';
+  static const _colorRequest = '\x1B[35m'; // Magenta
+  static const _colorResponse = '\x1B[28m'; // 
+  static const _colorGet = '\x1B[32m'; // Green
+  static const _colorPost = '\x1B[34m'; // Blue
+  static const _colorPut = '\x1B[33m'; // Yellow
+  static const _colorPatch = '\x1B[36m'; // Cyan
+  static const _colorDelete = '\x1B[31m'; // Red
+static const _colorSuccess = '\x1B[92m'; // Bright Green for successful responses
+
+  String _getColorForMethod(String method) {
+    switch (method.toUpperCase()) {
+      case 'GET':
+        return _colorGet;
+      case 'POST':
+        return _colorPost;
+      case 'PUT':
+        return _colorPut;
+      case 'PATCH':
+        return _colorPatch;
+      case 'DELETE':
+        return _colorDelete;
+      default:
+        return _colorReset;
+    }
   }
 
   void _logRequestHeader(RequestOptions options) {
-    _logBoxed('Request', '${options.method} ${options.uri}');
+    _logBoxed('Request', '${options.method} ${options.uri}',_colorRequest);
   }
 
   void _logHeadersAndExtras(RequestOptions options) {
-    _logHeaders(options.headers, header: 'Request Headers');
-    _logHeaders(options.queryParameters, header: 'Query Parameters');
-    _logHeaders(options.extra, header: 'Extras');
+    _logHeaders(options.headers, header: 'Request Headers',colorStart: _colorRequest);
+    _logHeaders(options.queryParameters, header: 'Query Parameters',colorStart: _colorRequest);
+    _logHeaders(options.extra, header: 'Extras',  colorStart: _colorRequest);
   }
 
   void _logRequestBody(RequestOptions options) {
@@ -139,7 +166,7 @@ class Trinterceptors extends Interceptor {
       _logBlock(data.toString());
     }
   }
-
+//
   void _logResponseHeader(Response response, int responseTime) {
     _logBoxed(
       'Response',
@@ -149,7 +176,7 @@ class Trinterceptors extends Interceptor {
 
   void _logResponseBody(Response response) {
     if (response.data is Map) {
-      _logPrettyMap(response.data as Map, header: 'Response Body');
+      _logPrettyMap(response.data as Map, header: 'Response Body',  colorStart: _colorPatch);
     } else if (response.data is List) {
       _logList(response.data as List, header: 'Response List');
     } else {
@@ -162,24 +189,25 @@ class Trinterceptors extends Interceptor {
       _logBoxed(
         'Error Response',
         '${error.response?.statusCode} ${error.response?.statusMessage} in $responseTime ms',
+        _colorDelete
       );
       _logResponseBody(error.response!);
     } else {
-      _logBoxed('Error', error.message ?? 'Unknown Error');
+      _logBoxed('Error', error.message ?? 'Unknown Error',_colorDelete);
     }
   }
 
-  void _logHeaders(Map? headers, {String? header}) {
+  void _logHeaders(Map? headers, {String? header,String colorStart = _colorReset}) {
     if (headers == null || headers.isEmpty) return;
-    logPrint('══ $header');
+    logPrint('$colorStart══ $header');
     headers.forEach((key, value) {
       _logKeyValue(key, value);
     });
     _logDivider('══');
   }
 
-  void _logPrettyMap(Map data, {String? header}) {
-    logPrint('══ $header');
+  void _logPrettyMap(Map data, {String? header,String colorStart = _colorReset}) {
+    logPrint('$colorStart══ $header');
     data.forEach((key, value) {
       if (value is Map) {
         logPrint('$key: {');
@@ -204,9 +232,10 @@ class Trinterceptors extends Interceptor {
     _logDivider('══');
   }
 
-  void _logBoxed(String title, String message) {
+//
+  void _logBoxed(String title, String message,[String colorStart = _colorGet]) {
     logPrint('');
-    logPrint('══ $title');
+    logPrint('$colorStart══ $title');
     logPrint(message);
     _logDivider('══');
   }
@@ -230,7 +259,7 @@ class Trinterceptors extends Interceptor {
     }
   }
 
-  void _logDivider(String suffix) => logPrint('╚${'═' * maxWidth}$suffix');
+  void _logDivider(String suffix, [String colorEnd = _colorReset]) => logPrint('╚${'═' * maxWidth}$suffix $colorEnd');
 
   bool _shouldLog(RequestOptions options, FilterArgs args) {
     return filter == null || filter!(options, args);
