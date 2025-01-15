@@ -117,13 +117,12 @@ class Trinterceptors extends Interceptor {
   }
   static const _colorReset = '\x1B[0m';
   static const _colorRequest = '\x1B[35m'; // Magenta
-  static const _colorResponse = '\x1B[28m'; // 
   static const _colorGet = '\x1B[32m'; // Green
   static const _colorPost = '\x1B[34m'; // Blue
   static const _colorPut = '\x1B[33m'; // Yellow
   static const _colorPatch = '\x1B[36m'; // Cyan
   static const _colorDelete = '\x1B[31m'; // Red
-static const _colorSuccess = '\x1B[92m'; // Bright Green for successful responses
+
 
   String _getColorForMethod(String method) {
     switch (method.toUpperCase()) {

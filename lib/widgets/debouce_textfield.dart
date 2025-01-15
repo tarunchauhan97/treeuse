@@ -8,12 +8,12 @@ class TreeuseDebounceTextField extends StatefulWidget {
   final TextStyle? style;
 
   const TreeuseDebounceTextField({
-    Key? key,
+    super.key,
     required this.onChanged,
     this.debounceDuration = const Duration(milliseconds: 300),
     this.decoration,
     this.style,
-  }) : super(key: key);
+  });
 
   @override
   _TreeuseDebounceTextFieldState createState() =>
