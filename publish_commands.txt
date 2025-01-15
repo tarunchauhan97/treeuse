@@ -1,4 +1,8 @@
 
+change version number
+
+Add changes done with version number
+
 flutter pub publish --dry-run
 
 flutter packages pub publish --dry-run
