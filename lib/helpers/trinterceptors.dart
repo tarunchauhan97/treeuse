@@ -112,7 +112,7 @@ class Trinterceptors extends Interceptor {
 
     logPrint('══ cURL Command');
     logPrint(buffer.toString());
-    logPrint('╚══════════════════════════════════════════════════════════════════════════════════════');
+    _logDivider('══');
   }
 
   void _logRequestHeader(RequestOptions options) {
